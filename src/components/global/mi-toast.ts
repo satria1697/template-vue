@@ -2,11 +2,8 @@ import { useToast } from 'vue-toast-notification'
 
 class MiToast {
   toast = useToast()
-  failed(message = 'failed') {
+  failed(message: string) {
     this.toast.error(message)
-  }
-  success(message = 'success') {
-    this.toast.success(message)
   }
 }
 
