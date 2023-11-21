@@ -25,35 +25,41 @@ const props = defineProps({
 })
 
 const classList = computed(() => {
-  const classList = ['hover:bg-secondary', 'transition', 'hover:text-white', 'rounded-md']
+  const baseValue = ['hover:bg-secondary', 'transition', 'hover:text-white', 'rounded-md']
+
   if (props.size === 'normal') {
-    classList.push('py-1.5', 'px-2.5')
+    baseValue.push('py-1.5', 'px-2.5')
   }
   if (props.size == 'small') {
-    classList.push('py-0.5', 'px-1.5')
+    baseValue.push('py-0.5', 'px-1.5')
   }
   if (props.size == 'big') {
-    classList.push('py-2.5', 'px-3.5')
+    baseValue.push('py-2.5', 'px-3.5')
   }
   if (props.length === 'full') {
-    classList.push('w-full')
+    baseValue.push('w-full')
   }
 
-  if (props.textPosition == 'left') {
-    classList.push('flex items-start')
+  if (props.textPosition === 'left') {
+    baseValue.push('flex items-start')
+  }
+
+  if (props.type === 'outline') {
+    baseValue.push('hover:bg-primary border-primary border')
+    return baseValue.join(' ')
   }
 
   if (props.type === 'empty') {
-    classList.push('hover:bg-primary')
-    return classList.join(' ')
+    baseValue.push('hover:bg-primary')
+    return baseValue.join(' ')
   }
-  classList.push('bg-primary', 'text-quaternary')
-  return classList.join(' ')
+  baseValue.push('bg-primary', 'text-quaternary')
+  return baseValue.join(' ')
 })
 </script>
 
 <template>
-  <button :class="classList">
+  <button :class="classList" class="">
     <slot>
       {{ text }}
     </slot>
