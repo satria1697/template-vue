@@ -1,21 +1,23 @@
-import { NavigationFailure, RouteParamsRaw, useRouter } from 'vue-router'
+import { NavigationFailure, RouteParams, RouteParamsRaw, useRouter } from 'vue-router'
 
-interface NavigationPushInterface {
-  name?: string
-  params?: RouteParamsRaw
-}
-
-interface NavigationInterface {
+interface INavigation {
   goBack: () => void
-  go: (options: NavigationPushInterface) => Promise<void | NavigationFailure | undefined>
+  go: (options: {
+    name?: string
+    params?: RouteParamsRaw
+  }) => Promise<void | NavigationFailure | undefined>
+  getParams: () => RouteParams
 }
 
-class Navigation implements NavigationInterface {
+export default class Navigation implements INavigation {
   router = useRouter()
   goBack() {
     this.router.back()
   }
-  go(options: NavigationPushInterface): Promise<void | NavigationFailure | undefined> {
+  go(options: {
+    name?: string
+    params?: RouteParamsRaw
+  }): Promise<void | NavigationFailure | undefined> {
     const { name, params } = options
     return this.router.push({
       name,
@@ -26,5 +28,3 @@ class Navigation implements NavigationInterface {
     return this.router.currentRoute.value.params
   }
 }
-
-export default Navigation
